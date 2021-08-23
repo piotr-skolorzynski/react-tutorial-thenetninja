@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [author, setAuthor] = useState('mario'); //wpisanie konkretnego imienia to coś jak wybrać w options poprzez selected
     const [isPending, setIsPending] = useState(false);
+    const history = useHistory();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -17,8 +19,10 @@ const Create = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(blog) //json-server dodaje id automatycznie
         }).then(() => {
-            console.log('new blog added');
+            // console.log('new blog added');
             setIsPending(false);
+            // history.go(-1) - pozwala przemieszczać w histori tutaj cofa do momentu przed wybranie  stwórz nowy blog
+            history.push('/'); //tutaj podaje się do jakiej ścieżki ma iść apka czyli tutaj do home
         })
     }
 
